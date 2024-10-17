@@ -7,6 +7,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 
 app = Flask(__name__)
 
@@ -23,10 +24,8 @@ def scrape_to_json():
     options.add_argument('--no-sandbox')  # Bypass OS security model (required for some environments)
     options.add_argument('--disable-dev-shm-usage')  # Overcome limited resource problems
 
-    # Use the provided Windows ChromeDriver path
-    chromedriver_path = r"chromedriver-win64/chromedriver.exe"
-    
-    driver = webdriver.Chrome(service=Service(chromedriver_path), options=options)
+    # Use webdriver-manager to automatically manage ChromeDriver
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     # Navigate to the URL
     url = 'https://www.sotwe.com/hashtag/Uranium'
